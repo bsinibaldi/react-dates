@@ -76,6 +76,7 @@ const defaultProps = {
   openDirection: OPEN_DOWN,
   horizontalMargin: 0,
   withPortal: false,
+  portalNodeRef: undefined,
   withFullScreenPortal: false,
   appendToBody: false,
   disableScroll: false,
@@ -374,6 +375,7 @@ class SingleDatePicker extends React.PureComponent {
       withPortal,
       withFullScreenPortal,
       appendToBody,
+      portalNodeRef,
     } = this.props;
 
     if (!focused) {
@@ -381,8 +383,9 @@ class SingleDatePicker extends React.PureComponent {
     }
 
     if (withPortal || withFullScreenPortal || appendToBody) {
+      const portalNode = portalNodeRef && portalNodeRef.current || undefined;
       return (
-        <Portal>
+        <Portal node={portalNode}>
           {this.renderDayPicker()}
         </Portal>
       );

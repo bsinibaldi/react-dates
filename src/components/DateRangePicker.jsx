@@ -83,6 +83,7 @@ const defaultProps = {
   openDirection: OPEN_DOWN,
   horizontalMargin: 0,
   withPortal: false,
+  portalNodeRef: undefined,
   withFullScreenPortal: false,
   appendToBody: false,
   disableScroll: false,
@@ -383,15 +384,16 @@ class DateRangePicker extends React.PureComponent {
   }
 
   maybeRenderDayPickerWithPortal() {
-    const { withPortal, withFullScreenPortal, appendToBody } = this.props;
+    const { withPortal, withFullScreenPortal, appendToBody, portalNodeRef } = this.props;
 
     if (!this.isOpened()) {
       return null;
     }
 
     if (withPortal || withFullScreenPortal || appendToBody) {
+      const portalNode = portalNodeRef && portalNodeRef.current || undefined;
       return (
-        <Portal>
+        <Portal node={portalNode}>
           {this.renderDayPicker()}
         </Portal>
       );
